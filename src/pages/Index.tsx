@@ -1,14 +1,36 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React, { useState } from 'react';
+import WelcomeForm from '@/components/WelcomeForm';
+import InterviewInterface from '@/components/InterviewInterface';
+
+interface UserInfo {
+  name: string;
+  role: string;
+  experience: string;
+  education: string;
+}
 
 const Index = () => {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
-    </div>
-  );
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [isInterviewStarted, setIsInterviewStarted] = useState(false);
+
+  const handleStartInterview = (info: UserInfo) => {
+    console.log('Starting interview for:', info);
+    setUserInfo(info);
+    setIsInterviewStarted(true);
+  };
+
+  const handleRestart = () => {
+    console.log('Restarting interview');
+    setUserInfo(null);
+    setIsInterviewStarted(false);
+  };
+
+  if (!isInterviewStarted || !userInfo) {
+    return <WelcomeForm onStartInterview={handleStartInterview} />;
+  }
+
+  return <InterviewInterface userInfo={userInfo} onRestart={handleRestart} />;
 };
 
 export default Index;
