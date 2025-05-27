@@ -9,7 +9,65 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      questions: {
+        Row: {
+          difficulty: string
+          expected_answer: string | null
+          id: string
+          question: string
+          role_id: string | null
+          tags: string[] | null
+          type: string
+        }
+        Insert: {
+          difficulty: string
+          expected_answer?: string | null
+          id?: string
+          question: string
+          role_id?: string | null
+          tags?: string[] | null
+          type: string
+        }
+        Update: {
+          difficulty?: string
+          expected_answer?: string | null
+          id?: string
+          question?: string
+          role_id?: string | null
+          tags?: string[] | null
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "questions_role_id_fkey"
+            columns: ["role_id"]
+            isOneToOne: false
+            referencedRelation: "roles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      roles: {
+        Row: {
+          category: string | null
+          description: string | null
+          id: string
+          title: string
+        }
+        Insert: {
+          category?: string | null
+          description?: string | null
+          id?: string
+          title: string
+        }
+        Update: {
+          category?: string | null
+          description?: string | null
+          id?: string
+          title?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
